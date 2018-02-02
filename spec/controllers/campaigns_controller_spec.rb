@@ -4,8 +4,6 @@ RSpec.describe CampaignsController, type: :controller do
   include Devise::Test::ControllerHelpers
 
   before(:each) do
-    # request.env["HTTP_ACCEPT"] = 'application/json'
-
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @current_user = FactoryBot.create(:user)
     sign_in @current_user
@@ -20,8 +18,8 @@ RSpec.describe CampaignsController, type: :controller do
 
   describe "GET #show" do
 
-    context "campaing exists" do
-      context "User is the owner of the campaing" do
+    context "campaign exists" do
+      context "User is the owner of the campaign" do
         it "Returns success" do
           campaign = create(:campaign, user: @current_user)
           get :show, params: {id: campaign.id}
@@ -33,7 +31,6 @@ RSpec.describe CampaignsController, type: :controller do
         it "Redirects to root" do
           campaign = create(:campaign)
           get :show, params: {id: campaign.id}
-
           expect(response).to redirect_to('/')
         end
       end
@@ -59,10 +56,10 @@ RSpec.describe CampaignsController, type: :controller do
       expect(response).to redirect_to("/campaigns/#{Campaign.last.id}")
     end
 
-    it "Create campaign with right attributes" do
+    it "Create campaign with initial params" do
       expect(Campaign.last.user).to eql(@current_user)
-      expect(Campaign.last.title).to eql(@campaign_attributes[:title])
-      expect(Campaign.last.description).to eql(@campaign_attributes[:description])
+      expect(Campaign.last.title).to eql("Nova Campanha")
+      expect(Campaign.last.description).to eql("Descreva sua campanha...")
       expect(Campaign.last.status).to eql('pending')
     end
 
