@@ -12,8 +12,7 @@ class CampaignsController < ApplicationController
   end
 
   def create
-    @campaign = Campaign.new(campaign_params)
-
+    @campaign = Campaign.new(user: current_user, title: 'Nova Campanha', description: 'Descreva sua campanha...')
     respond_to do |format|
       if @campaign.save
         format.html { redirect_to "/campaigns/#{@campaign.id}" }
@@ -35,7 +34,6 @@ class CampaignsController < ApplicationController
 
   def destroy
     @campaign.destroy
-
     respond_to do |format|
       format.json { render json: true }
     end
