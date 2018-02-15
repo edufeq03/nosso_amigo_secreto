@@ -10,10 +10,8 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       if @member.save
-        format.html {}
-        format.json { render json: @member, status: 201 }
+        format.json { render json: @member }
       else
-        format.html {}
         format.json { render json: @member.errors, status: :unprocessable_entity }
       end
     end
@@ -23,7 +21,6 @@ class MembersController < ApplicationController
     @member.destroy
 
     respond_to do |format|
-      format.html {}
       format.json { render json: true }
     end
   end
